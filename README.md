@@ -2,7 +2,7 @@
 
 ## 📖 Przegląd Projektu
 Projekt obejmuje zaprojektowanie, wykonanie i zaprogramowanie w pełni autonomicznego stanowiska zrobotyzowanego. System integruje transport liniowy z manipulacją 3-osiową w celu stworzenia zamkniętej pętli logistycznej (Close-Loop Process). 
-
+[![ DEMO na YouTube](https://www.youtube.com/shorts/-lhYYwHI6BA)
 Wszystkie elementy mechaniczne zostały opracowane w środowisku CAD i wykonane w technologii przyrostowej (Druk 3D), co pozwoliło na optymalizację wagi ramienia oraz precyzyjne dopasowanie gniazd pod sensorykę i napędy.
 
 ---
