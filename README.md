@@ -11,8 +11,8 @@ Wszystkie elementy mechaniczne zostały opracowane w środowisku CAD i wykonane 
 
 ### 1. Konstrukcja Mechaniczna (CAD/3D Printing)
 * **Kinematyka:** 3-osiowe ramię typu SCARA/Anthropomorphic (zależnie od Twojej konstrukcji) z chwytakiem dwuszczękowym.
-* **Transporter:** Przenośnik taśmowy z regulowanym naciągiem, napędzany silnikiem [wpisz typ, np. DC z przekładnią / krokowym].
-* **Materiał:** Wykorzystanie filamentu [np. PLA/PETG] z wypełnieniem [np. 20-40%] dla zapewnienia odpowiedniej sztywności konstrukcji przy dynamicznych ruchach.
+* **Transporter:** Przenośnik taśmowy z regulowanym naciągiem, napędzany silnikiem DC.
+* **Materiał:** Wykorzystanie filamentu PLA / PET-G dla zapewnienia odpowiedniej sztywności konstrukcji przy dynamicznych ruchach.
 
 ### 2. Elektronika i Sterowanie (Embedded Systems)
 * **Jednostka centralna:** Arduino (Atmega328P) realizująca algorytm sterowania w czasie rzeczywistym.
@@ -21,7 +21,7 @@ Wszystkie elementy mechaniczne zostały opracowane w środowisku CAD i wykonane 
 
 ### 3. Logika Programowa (Software)
 * **Algorytm sekwencyjny:** Implementacja maszyny stanów (Finite State Machine), eliminująca błędy synchronizacji między transporterem a ramieniem.
-* **Synchronizacja:** Wykorzystanie przerwań (interrupts) lub pętli sprawdzającej stan czujnika (polling) do natychmiastowego zatrzymania linii po wykryciu detalu.
+* **Synchronizacja:** Wykorzystanie przerwań i pętli sprawdzających stan czujnika (polling) do natychmiastowego zatrzymania linii po wykryciu detalu.
 * **Kalibracja:** Funkcja bazowania (homing) po uruchomieniu układu, zapewniająca bezpieczeństwo mechaniczne.
 
 ---
@@ -37,19 +37,11 @@ Wszystkie elementy mechaniczne zostały opracowane w środowisku CAD i wykonane 
 
 ---
 
-## 🛠️ Jak uruchomić projekt?
-1.  **Hardware:** Połącz komponenty zgodnie ze schematem w folderze `/schematics`.
-2.  **Software:** Otwórz plik `main.ino` w Arduino IDE.
-3.  **Biblioteki:** Upewnij się, że masz zainstalowaną bibliotekę `Servo.h`.
-4.  **Upload:** Wgraj kod na płytkę i zasil układ napięciem [np. 5V/7.4V].
-
----
-
 ## 📈 Potencjał Rozwojowy
 * Implementacja **Inverse Kinematics (IK)** dla płynniejszych ruchów ramienia.
 * Dodanie **czujnika koloru** do sortowania detali na różne strony transportera.
 * Zastąpienie Arduino sterownikiem **PLC (np. S7-1200)** w celu zbliżenia projektu do standardów przemysłowych.
 
 ---
-**Autor:** [Twoje Imię i Nazwisko]
+**Autor:** [Mateusz Papierski]
 *Student Automatyki i Robotyki Politechniki Poznańskiej*
