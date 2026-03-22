@@ -1,0 +1,48 @@
+#ifndef arm_h
+#define arm_h
+
+
+#define START_POS_X 0
+#define START_POS_Y 0
+#define START_POS_Z 0
+
+
+typedef struct {
+	double x;
+	double y;
+	double z;
+} Pos_3d;
+
+
+
+
+
+class Arm {
+
+	private:
+		Pos_3d pos;
+
+		Servo* gripper;
+
+	public:
+		Arm();
+
+
+		void init();
+
+
+		// for gripper
+
+		void gripperOpen();
+		void gripperClose();
+
+
+		// IK
+		bool solve();
+		void setPoint(Pos_3d pos);
+		void move();
+};
+
+
+
+#endif
