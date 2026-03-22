@@ -12,16 +12,17 @@ Wszystkie elementy mechaniczne zostały opracowane w środowisku CAD i wykonane 
 
 ---
 
-## 🏗️ Specyfikacja Techniczna
+## 🏗️ Specyfikacja Techniczna i Hardware
 
 ### 1. Konstrukcja Mechaniczna (CAD/3D Printing)
-* **Kinematyka:** 3-osiowe ramię typu SCARA/Anthropomorphic (zależnie od Twojej konstrukcji) z chwytakiem dwuszczękowym.
-* **Transporter:** Przenośnik taśmowy z regulowanym naciągiem, napędzany silnikiem DC.
-* **Materiał:** Wykorzystanie filamentu PLA / PET-G dla zapewnienia odpowiedniej sztywności konstrukcji przy dynamicznych ruchach.
+* **Ramię Robotyczne:** Wydrukowane w 3D ramię wieloosiowe wyposażone w serwomechanizmy modelarskie (micro servos) oraz dwuszczękowy chwytak dopasowany do kształtu przenoszonych detali (cylindrów).
+* **System Transportowy:** Autorski projekt transportera z 3D-drukowaną taśmą modułową, napędzaną silnikiem z przekładnią. Zastosowano specjalne koła napędowe zapobiegające ześlizgiwaniu się taśmy.
+* **Baza:** Komponenty osadzone na przezroczystej płycie z pleksi, co zapewnia sztywność układu oraz ułatwia estetyczne prowadzenie okablowania.
 
 ### 2. Elektronika i Sterowanie (Embedded Systems)
-* **Jednostka centralna:** Arduino (Atmega328P) realizująca algorytm sterowania w czasie rzeczywistym.
-* **Sensoryka:** Czujnik optyczny (bariera podczerwieni) pełniący funkcję limitera drogi transportu i triggera dla sekwencji ruchu robota.
+* **Jednostka sterująca:** **Arduino Uno** wyposażone w dedykowaną nakładkę (Sensor/Servo Shield) ułatwiającą podłączenie napędów i minimalizującą plątaninę kabli.
+* **Detekcja detali:** Przemysłowy czujnik zbliżeniowy/optyczny (w obudowie cylindrycznej) zamontowany na końcu linii, pełniący funkcję cyfrowego sygnału wyzwalającego (Trigger) dla cyklu robota.
+* **Zasilanie:** Zewnętrzne zasilanie wyprowadzone przez złącze śrubowe (terminal block), zapewniające stabilny prąd dla pracujących serwomechanizmów i napędu taśmy.
 * **Napędy:** Precyzyjne serwomechanizmy sterowane sygnałem PWM, zapewniające powtarzalność pozycji.
 
 ### 3. Logika Programowa (Software)
@@ -32,20 +33,16 @@ Wszystkie elementy mechaniczne zostały opracowane w środowisku CAD i wykonane 
 ---
 
 ## 🔄 Algorytm Działania (Workflow)
-1.  **IDLE/START:** Transporter uruchamia ruch taśmy do przodu.
-2.  **DETEKCJA:** Obiekt przerywa wiązkę czujnika optycznego -> Sygnał HIGH do Arduino.
-3.  **BRAKING:** Natychmiastowe zatrzymanie silnika transportera (pozycja detalu ustalona).
-4.  **PICK:** Ramię przemieszcza się nad detal, opuszcza chwytak i następuje zaciśnięcie szczęk.
-5.  **PLACE:** Przeniesienie detalu po wyznaczonej trajektorii na początek transportera.
-6.  **RELEASE:** Zwolnienie chwytaka i powrót ramienia do pozycji bezpiecznej (Home).
-7.  **REPEAT:** Ponowne uruchomienie taśmy (powrót do kroku 1).
-
+1.  **TRANSPORT:** Silnik transportera przesuwa detal (beczkę) do strefy odbioru.
+2.  **TRIGGER:** Detal wchodzi w pole widzenia czujnika cylindrycznego -> Sygnał trafia do mikrokontrolera.
+3.  **STOP:** Natychmiastowe zatrzymanie napędu transportera.
+4.  **PICK:** Sekwencyjny ruch ramienia: ustawienie pozycji, opuszczenie ramienia, zamknięcie chwytaka na detalu.
+5.  **PLACE:** Przeniesienie detalu po ustalonej trajektorii i odłożenie go na sam początek transportera.
+6.  **RESET:** Powrót ramienia do pozycji bezpiecznej (Home) i ponowne załączenie napędu taśmy.
 ---
 
 ## 📈 Potencjał Rozwojowy
 * Implementacja **Inverse Kinematics (IK)** dla płynniejszych ruchów ramienia.
-* Dodanie **czujnika koloru** do sortowania detali na różne strony transportera.
-* Zastąpienie Arduino sterownikiem **PLC (np. S7-1200)** w celu zbliżenia projektu do standardów przemysłowych.
 
 ---
 **Autor:** [Mateusz Papierski]
