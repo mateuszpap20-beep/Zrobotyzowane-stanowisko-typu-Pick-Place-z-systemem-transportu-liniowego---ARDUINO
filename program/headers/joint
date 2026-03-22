@@ -1,0 +1,65 @@
+#ifndef joint_h
+#define joint_h
+
+typedef struct {
+	String id;
+} joint_id;
+
+
+typedef struct {
+	uint8_t pin;
+} joint_pin;
+
+
+typedef struct {
+	bool isInverse;
+} joint_inverse;
+
+typedef struct {
+	double raw_angle;
+	int angle;
+} joint_angle;
+
+
+
+typedef struct {
+	joint_id id;
+	joint_pin pin;
+	joint_inverse isInverse;
+	joint_angle angle;
+} Joint;
+
+
+
+Joint joint[JOINTS_NUM] = {
+	{
+		{ "BOTTOM" },
+		{ BOTTOM_PIN },
+		{ true },
+		{ 90, 0 }
+	},
+
+	{
+		{ "RIGHT" },
+		{ RIGHT_PIN },
+		{ false },
+		{ 0, 0 }
+	},
+
+	{
+		{"LEFT"},
+		{ LEFT_PIN },
+		{ true },
+		{ 120, 0 }
+	}
+};
+
+
+
+Servo Right;
+Servo Left;
+Servo Bottom;
+
+
+
+#endif
