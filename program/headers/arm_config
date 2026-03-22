@@ -1,0 +1,32 @@
+#ifndef arm_config_h
+#define arm_config_h
+
+
+#define BOTTOM_PIN 11
+#define RIGHT_PIN  10
+#define LEFT_PIN    5
+
+#define GRIPPER_PIN 6
+
+
+
+#define JOINTS_NUM 3
+
+
+
+#define GRIPPER_MAX 160
+#define GRIPPER_MIN 70
+
+
+#define BOTTOM_START_POS 90
+#define RIGHT_START_POS 0
+#define LEFT_START_POS 120
+
+
+
+#define a0 100.0
+#define a1 135.0
+#define a2 147.0
+
+
+#endif
