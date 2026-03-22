@@ -1,5 +1,4 @@
-# Zrobotyzowane-stanowisko-typu-Pick-Place-z-systemem-transportu-liniowego---ARDUINO
-# 🤖 Autonomous Pick & Place System: 3-Axis Manipulator + Integrated Conveyor
+# 🤖 Zrobotyzowane-stanowisko-typu-Pick-Place-z-systemem-transportu-liniowego---ARDUINO
 
 ## 📖 Przegląd Projektu
 Projekt obejmuje zaprojektowanie, wykonanie i zaprogramowanie w pełni autonomicznego stanowiska zrobotyzowanego. System integruje transport liniowy z manipulacją 3-osiową w celu stworzenia zamkniętej pętli logistycznej (Close-Loop Process). 
