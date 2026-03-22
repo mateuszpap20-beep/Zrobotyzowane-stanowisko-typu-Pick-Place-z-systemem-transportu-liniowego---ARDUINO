@@ -1,0 +1,280 @@
+#include "./libs/transporter.h"
+#include "./libs/transporter.cpp"
+
+#include "headers/arm_config.h"
+
+
+#include <Servo.h>
+
+
+
+//#define BAUD 9600
+
+
+
+Servo Gripper;
+Servo Bottom;
+Servo Right;
+Servo Left;
+
+Transporter transporter;
+
+
+
+
+String reciveData;
+String tmp = "";
+
+char* data;
+
+uint8_t gripper_angle = 0;
+uint8_t bottom_angle = 0;
+uint8_t right_angle = 0;
+uint8_t left_angle = 0;
+
+
+typedef unsigned long ul;
+ul currentMillis;
+ul elapsedMillis;
+ul lastMillis = 0;
+
+
+
+
+void setup(void) {
+  transporter.init();
+  transporter.stop();
+  delay(100);
+
+
+  initArm();
+  delay(100);
+
+
+#ifdef BAUD
+  Serial.begin(9600);
+#endif
+
+transporter.run();
+
+}
+
+void loop(void) {
+
+#ifdef BAUD
+  getData();
+#endif
+
+  if (transporter.isSensor()) {
+    transporter.stop();
+    cooperateWithTransporter();
+    transporter.run();
+  }
+
+}
+
+
+
+///////////////////////////////////////////////////////////
+
+void initArm() {
+  Gripper.attach(GRIPPER_PIN);
+
+  Bottom.attach(BOTTOM_PIN);
+  Right.attach(RIGHT_PIN);
+  Left.attach(LEFT_PIN);
+
+  delay(100);
+
+  gripperClose();
+
+  bottom_angle = BOTTOM_START_POS;
+  right_angle = RIGHT_START_POS;
+  left_angle = LEFT_START_POS;
+
+  Bottom.write(BOTTOM_START_POS);
+  Right.write(RIGHT_START_POS);
+  Left.write(LEFT_START_POS);
+}
+
+///////////////////////////////////////////////////////////
+
+
+
+void gripperOpen() {
+  Gripper.write(GRIPPER_MAX);
+  gripper_angle = (uint8_t)GRIPPER_MAX;
+}
+
+void gripperClose() {
+  Gripper.write(GRIPPER_MIN);
+  gripper_angle = (uint8_t)GRIPPER_MIN;
+}
+
+
+
+
+
+/*void armMove(uint8_t bottom_target_position, uint8_t right_target_position, uint8_t left_target_position) {
+
+  uint8_t bottom_current_position = Bottom.read();
+  uint8_t right_current_position = Right.read();
+  uint8_t left_current_position = Left.read();
+
+  while (1) {
+      currentMillis = millis();
+      elapsedMillis = currentMillis - lastMillis;
+
+      while (elapsedMillis > 10) {
+
+        if ((uint8_t)Bottom.read() != bottom_target_position)
+          if (bottom_target_position >= bottom_current_position)
+            Bottom.write(bottom_current_position++);
+          else
+            Bottom.write(bottom_current_position--);
+
+        if ((uint8_t)Right.read() != right_target_position)
+          if (right_target_position >= right_target_position)
+            Right.write(right_current_position++);
+          else
+            Right.write(right_current_position--);
+
+        if ((uint8_t)Left.read() != left_target_position)
+          if (left_target_position >= left_current_position)
+            Left.write(left_target_position++);
+          else
+            Left.write(left_current_position--);
+
+        lastMillis = millis();
+      }
+      if (Bottom.read() == bottom_target_position &&
+          Right.read() == right_target_position &&
+          Left.read() == left_target_position)  break;
+    }
+  }*/
+
+void cooperateWithTransporter() {
+
+  while (1) {
+    gripperOpen();
+
+    int bottom_current_position = Bottom.read();
+    int right_current_position = Right.read();
+    int left_current_position = Left.read();
+
+    unsigned long _time, _old = 0;
+
+part1:
+    _time = millis();
+    if (_time - _old >= 15) {
+      _old = _time;
+      Bottom.write(bottom_current_position++);
+      if (Bottom.read() == 145)
+        goto part2;
+    }
+    goto part1;
+
+
+part2:
+    _time = millis();
+    if (_time - _old >= 15) {
+      _old = _time;
+      if (Right.read() != 34)
+        Right.write(right_current_position++);
+      if (Left.read() != 100)
+        Left.write(left_current_position--);
+      if (Right.read() == 34 && Left.read() == 100)
+        goto part3;
+    }
+    goto part2;
+
+
+part3:
+    gripperClose();
+    delay(100);
+    goto part4;
+    goto part3;
+
+
+part4:
+    _time = millis();
+    if (_time - _old >= 15) {
+      _old = _time;
+      if (Right.read() != 0)
+        Right.write(right_current_position--);
+      if (Left.read() != 120)
+        Left.write(left_current_position++);
+      if (Right.read() == 0 && Left.read() == 120)
+        goto part5;
+    }
+    goto part4;
+
+
+part5:
+    _time = millis();
+    if (_time - _old >= 15) {
+      _old = _time;
+      if (Bottom.read() != 10)
+        Bottom.write(bottom_current_position--);
+      if (Bottom.read() == 10)
+        goto part6;
+    }
+    goto part5;
+
+
+part6:
+    _time = millis();
+    if (_time - _old >= 15) {
+      _old = _time;
+      if (Right.read() != 35)
+        Right.write(right_current_position++);
+      if (Left.read() != 100)
+        Left.write(left_current_position--);
+      if (Right.read() == 35 && Left.read() == 100)
+        goto part7;
+    }
+    goto part6;
+
+
+part7:
+    delay(100);
+    gripperOpen();
+    delay(100);
+    goto part8;
+    goto part7;
+
+
+part8:
+    _time = millis();
+    if (_time - _old >= 15) {
+      _old = _time;
+      if (Right.read() != 0)
+        Right.write(right_current_position--);
+      if (Left.read() != 120)
+        Left.write(left_current_position++);
+      if (Right.read() == 0 && Left.read() == 120)
+        goto part9;
+    }
+    goto part8;
+
+
+part9:
+    gripperClose();
+    delay(100);
+    goto part10;
+    goto part9;
+
+
+part10:
+    _time = millis();
+    if (_time - _old >= 15) {
+      _old = _time;
+      if (Bottom.read() != 90)
+        Bottom.write(bottom_current_position++);
+      if (Bottom.read() == 90)
+        break;
+    }
+    goto part10;
+  }
+
+}
